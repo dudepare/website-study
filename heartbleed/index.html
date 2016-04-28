@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Heartbleed -- a bootstrap study</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style type="text/css">
+    body {
+      font-family: "Lato", sans-serif;
+      font-weight: 300;
+      font-size: 1.5em;
+      color:#222;
+      margin: 4em 0;
+    }
+    h1 {
+      font-size: 2em;
+      font-weight: 400;
+      text-align: center;
+    }
+    h2{
+      font-size: 1.5em;
+      font-weight: 400;
+      margin: 1em 0;
+    }
+    h3 {
+      font-size: 1.2em;
+      font-weight: 400;
+      margin: 2em 0 0.5em 0;
+    }
+    h4{
+      font-size:1 em;
+      font-weight: 400;
+      margin: 2em 0 0.5em 0;
+    }
+
+    @media (min-width: 768px) {
+        h1 {
+            margin: 1em 0;
+            text-align: left;
+        }
+        .download {
+            padding-left: 20px;
+            font-size: 0.8em;
+        }
+        footer {
+            margin-top: 4em;
+        }
+    }
+    @media (min-width: 992px) {
+        body {
+            font-size: 2em;
+        }
+        .container {
+            max-width: 970px;
+        }
+        footer {
+            font-size: 0.7em;
+            text-align: center;
+        }
+        hr {
+            margin: 3em 0;
+        }
+        .row img {
+            max-width: 100%;
+        }
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>The Heartbleed Bug</h1>
+      <div class="row">
+        <div class="heart col-lg-4 col-md-4 col-sm-4 col-lg-push-8 col-md-push-8 col-sm-push-8" style="text-align: center; padding-top: 30px;">
+          <img src="heartbleed.png" alt="Heartbleed">
+        </div>
+        <div class="story col-lg-8 col-md-8 col-sm-8 col-lg-pull-4 col-md-pull-4 col-sm-pull-4">
+          <p>The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. This weakness allows stealing the information protected, under normal conditions, by the SSL/TLS encryption used to secure the Internet. SSL/TLS provides communication security and privacy over the Internet for applications such as web, email, instant messaging (IM) and some virtual private networks (VPNs).</p>
+          <p>The Heartbleed bug allows anyone on the Internet to read the memory of the systems protected by the vulnerable versions of the OpenSSL software. This compromises the secret keys used to identify the service providers and to encrypt the traffic, the names and passwords of the users and the actual content. This allows attackers to eavesdrop on communications, steal data directly from the services and users and to impersonate services and users.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <h3>What leaks in practice?</h3>
+          <p>We have tested some of our own services from attacker's perspective. We attacked ourselves from outside, without leaving a trace. Without using any privileged information or credentials we were able steal from ourselves the secret keys used for our X.509 certificates, user names and passwords, instant messages, emails and business critical documents and communication.</p>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <h3>How to stop the leak?</h3>
+          <p>As long as the vulnerable version of OpenSSL is in use it can be abused. <a href="https://www.openssl.org/news/secadv_20140407.txt">Fixed OpenSSL</a> has been released and now it has to be deployed. Operating system vendors and distribution, appliance vendors, independent software vendors have to adopt the fix and notify their users. Service providers and users have to install the fix as it becomes available for the operating systems, networked appliances and software they use.</p>
+        </div>        
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <hr>
+          <h3>Q&amp;A</h3>
+          <h4>What is the CVE-2014-0160?</h4>
+          <p>CVE-2014-0160 is the official reference to this bug. CVE (Common Vulnerabilities and Exposures) is the Standard for Information Security Vulnerability Names maintained by <a href="http://cve.mitre.org/">MITRE</a>. Due to co-incident discovery a duplicate CVE, CVE-2014-0346, which was assigned to us, should not be used, since others independently went public with the CVE-2014-0160 identifier.</p>
+          <h4>Why it is called the Heartbleed Bug?</h4>
+          <p>Bug is in the OpenSSL's implementation of the TLS/DTLS (transport layer security protocols) heartbeat extension (RFC6520). When it is exploited it leads to the leak of memory contents from the server to the client and from the client to the server.</p>
+          <h4>What makes the Heartbleed Bug unique?</h4>
+          <p>Bugs in single software or library come and go and are fixed by new versions. However this bug has left large amount of private keys and other secrets exposed to the Internet. Considering the long exposure, ease of exploitation and attacks leaving no trace this exposure should be taken seriously.</p>
+          <h4>What makes the Heartbleed Bug unique?</h4>
+          <p>Bugs in single software or library come and go and are fixed by new versions. However this bug has left large amount of private keys and other secrets exposed to the Internet. Considering the long exposure, ease of exploitation and attacks leaving no trace this exposure should be taken seriously.</p>
+          <h4>Is this a design flaw in SSL/TLS protocol specification?</h4>
+          <p>No. This is implementation problem, i.e. programming mistake in popular OpenSSL library that provides cryptographic services such as SSL/TLS to the applications and services.</p>
+          <h4>What is being leaked?</h4>
+          <p>Encryption is used to protect secrets that may harm your privacy or security if they leak. In order to coordinate recovery from this bug we have classified the compromised secrets to four categories: 1) primary key material, 2) secondary key material and 3) protected content and 4) collateral.</p>
+          <h4>What is leaked primary key material and how to recover?</h4>
+          <p>These are the crown jewels, the encryption keys themselves. Leaked secret keys allow the attacker to decrypt any past and future traffic to the protected services and to impersonate the service at will. Any protection given by the encryption and the signatures in the X.509 certificates can be bypassed. Recovery from this leak requires patching the vulnerability, revocation of the compromised keys and reissuing and redistributing new keys. Even doing all this will still leave any traffic intercepted by the attacker in the past still vulnerable to decryption. All this has to be done by the owners of the services.</p>
+          <h4>What is leaked secondary key material and how to recover?</h4>
+          <p>These are for example the user credentials (user names and passwords) used in the vulnerable services. Recovery from this leak requires owners of the service first to restore trust to the service according to steps described above. After this users can start changing their passwords and possible encryption keys according to the instructions from the owners of the services that have been compromised. All session keys and session cookies should be invalidated and considered compromised.</p>
+          <h4>What is leaked protected content and how to recover?</h4>
+          <p>This is the actual content handled by the vulnerable services. It may be personal or financial details, private communication such as emails or instant messages, documents or anything seen worth protecting by encryption. Only owners of the services will be able to estimate the likelihood what has been leaked and they should notify their users accordingly. Most important thing is to restore trust to the primary and secondary key material as described above. Only this enables safe use of the compromised services in the future.</p>
+          <h4>What is leaked collateral and how to recover?</h4>
+          <p>Leaked collateral are other details that have been exposed to the attacker in the leaked memory content. These may contain technical details such as memory addresses and security measures such as canaries used to protect against overflow attacks. These have only contemporary value and will lose their value to the attacker when OpenSSL has been upgraded to a fixed version.</p>
+          <h4>Recovery sounds laborious, is there a short cut?</h4>
+          <p>After seeing what we saw by "attacking" ourselves, with ease, we decided to take this very seriously. We have gone laboriously through patching our own critical services and are dealing with possible compromise of our primary and secondary key material. All this just in case we were not first ones to discover this and this could have been exploited in the wild already.</p>
+          <h4>How revocation and reissuing of certificates works in practice?</h4>
+          <p>If you are a service provider you have signed your certificates with a Certificate Authority (CA). You need to check your CA how compromised keys can be revoked and new certificate reissued for the new keys. Some CAs do this for free, some may take a fee.</p>
+          <h4>Am I affected by the bug?</h4>
+          <p>You are likely to be affected either directly or indirectly. OpenSSL is the most popular open source cryptographic library and TLS (transport layer security) implementation used to encrypt traffic on the Internet. Your popular social site, your company's site, commerce site, hobby site, site you install software from or even sites run by your government might be using vulnerable OpenSSL. Many of online services use TLS to both to identify themselves to you and to protect your privacy and transactions. You might have networked appliances with logins secured by this buggy implementation of the TLS. Furthermore you might have client side software on your computer that could expose the data from your computer if you connect to compromised services.</p>
+          <h4>How widespread is this?</h4>
+          <p>The most notable software using OpenSSL are the open source web servers like Apache and nginx. The combined market share of just those two out of the active sites on the Internet was over 66% according to <a href="http://news.netcraft.com/archives/2014/04/02/april-2014-web-server-survey.html">Netcraft's April 2014 Web Server Survey</a>. Furthermore OpenSSL is used to protect for example email servers (SMTP, POP and IMAP protocols), chat servers (XMPP protocol), virtual private networks (SSL VPNs), network appliances and wide variety of client side software. Fortunately many large consumer sites are saved by their conservative choice of SSL/TLS termination equipment and software. Ironically smaller and more progressive services or those who have upgraded to latest and best encryption will be affected most. Furthermore OpenSSL is very popular in client software and somewhat popular in networked appliances which have most inertia in getting updates.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
